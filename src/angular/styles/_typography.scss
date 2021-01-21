@@ -181,7 +181,7 @@ h1,
         1.196,
       ),
     );
-    @include mqSequence($fontSizes) using ($fontSize, $lineHeight) {
+    @include mqSequence($sizes) using ($fontSize, $lineHeight) {
       font-size: $fontSize;
       line-height: $lineHeight;
     }
@@ -224,7 +224,7 @@ h2,
         1.19,
       ),
     );
-    @include mqSequence($fontSizes) using ($fontSize, $lineHeight) {
+    @include mqSequence($sizes) using ($fontSize, $lineHeight) {
       font-size: $fontSize;
       line-height: $lineHeight;
     }
@@ -268,7 +268,7 @@ h3,
         1.194,
       ),
     );
-    @include mqSequence($fontSizes) using ($fontSize, $lineHeight) {
+    @include mqSequence($sizes) using ($fontSize, $lineHeight) {
       font-size: $fontSize;
       line-height: $lineHeight;
     }
@@ -284,7 +284,8 @@ h4,
 
   @include sbbStandard {
     $fontSizes: (
-      base: pxToRem(15) desktop4k: pxToRem(23),
+      base: pxToRem(15),
+      desktop4k: pxToRem(23),
       desktop5k: pxToRem(30),
     );
     @include mqSequence($fontSizes) using ($value) {
