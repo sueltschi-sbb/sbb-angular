@@ -45,13 +45,15 @@
 // ----------------------------------------------------------------------------------------------------
 
 * {
+  /* prettier-ignore */
   @include sbbStandard {
-    -ie-sbbmode: standard;
-    --sbbMode: standard;
+    -ie-sbbmode:standard;
+    --sbbMode:standard;
   }
+  /* prettier-ignore */
   @include sbbLean {
-    -ie-sbbmode: lean;
-    --sbbMode: lean;
+    -ie-sbbmode:lean;
+    --sbbMode:lean;
   }
 }
 

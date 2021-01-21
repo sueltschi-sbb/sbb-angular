@@ -3,7 +3,7 @@
  */
 @mixin sbbStandard {
   &,
-  .sbb-lean .sbb-standard &,
+  .sbb-lean .sbb-standard &:not(.sbb-lean),
   .sbb-lean &.sbb-standard {
     @content;
   }
@@ -14,7 +14,7 @@
  */
 @mixin sbbLean {
   .sbb-lean &,
-  .sbb-standard .sbb-lean &,
+  .sbb-standard .sbb-lean &:not(.sbb-standard),
   .sbb-standard &.sbb-lean {
     @content;
   }
