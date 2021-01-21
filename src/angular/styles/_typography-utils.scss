@@ -1,0 +1,21 @@
+/**
+ * Applies standard selectors to parent
+ */
+@mixin sbbStandard {
+  &,
+  .sbb-lean .sbb-standard &,
+  .sbb-lean &.sbb-standard {
+    @content;
+  }
+}
+
+/**
+ * Applies lean selectors to parent
+ */
+@mixin sbbLean {
+  .sbb-lean &,
+  .sbb-standard .sbb-lean &,
+  .sbb-standard &.sbb-lean {
+    @content;
+  }
+}

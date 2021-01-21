@@ -1,0 +1,923 @@
+@import './common';
+@import './typography-utils';
+
+// ----------------------------------------------------------------------------------------------------
+// Custom Webfonts
+// ----------------------------------------------------------------------------------------------------
+
+@font-face {
+  font-family: 'SBBWeb Bold';
+  src: url('https://cdn.app.sbb.ch/fonts/v1_6_subset/SBBWeb-Bold.woff2') format('woff2'),
+    url('https://cdn.app.sbb.ch/fonts/v1_6_subset/SBBWeb-Bold.woff') format('woff');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SBBWeb Light';
+  src: url('https://cdn.app.sbb.ch/fonts/v1_6_subset/SBBWeb-Light.woff2') format('woff2'),
+    url('https://cdn.app.sbb.ch/fonts/v1_6_subset/SBBWeb-Light.woff') format('woff');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SBBWeb Roman';
+  src: url('https://cdn.app.sbb.ch/fonts/v1_6_subset/SBBWeb-Roman.woff2') format('woff2'),
+    url('https://cdn.app.sbb.ch/fonts/v1_6_subset/SBBWeb-Roman.woff') format('woff');
+  font-display: fallback;
+}
+
+@font-face {
+  font-family: 'SBBWeb Thin';
+  src: url('https://cdn.app.sbb.ch/fonts/v1_6_subset/SBBWeb-Thin.woff2') format('woff2'),
+    url('https://cdn.app.sbb.ch/fonts/v1_6_subset/SBBWeb-Thin.woff') format('woff');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SBBWeb Ultralight';
+  src: url('https://cdn.app.sbb.ch/fonts/v1_6_subset/SBBWeb-UltraLight.woff2') format('woff2'),
+    url('https://cdn.app.sbb.ch/fonts/v1_6_subset/SBBWeb-UltraLight.woff') format('woff');
+  font-display: swap;
+}
+
+// ----------------------------------------------------------------------------------------------------
+// CSS Variables
+// ----------------------------------------------------------------------------------------------------
+
+* {
+  @include sbbStandard {
+    -ie-sbbmode: standard;
+    --sbbMode: standard;
+  }
+  @include sbbLean {
+    -ie-sbbmode: lean;
+    --sbbMode: lean;
+  }
+}
+
+// ----------------------------------------------------------------------------------------------------
+// Reset HTML
+// ----------------------------------------------------------------------------------------------------
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+article,
+aside,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+nav,
+section {
+  display: block;
+}
+
+html {
+  background: $sbbColorBg;
+  color: $sbbColorText;
+  font-family: $fontSbbRoman;
+  font-size: $sizeFontBase / 16px * 100%;
+  line-height: $sizeLineHeightBase;
+
+  @include fontSmoothing;
+
+  b,
+  strong,
+  optgroup[label='*'] {
+    font-family: $fontSbbBold;
+    font-weight: normal;
+  }
+}
+
+body {
+  margin: 0;
+}
+
+// Suppress the focus outline on elements that cannot be accessed via keyboard.
+// This prevents an unwanted focus outline from appearing around elements that
+// might still respond to pointer events.
+//
+// Credit: https://github.com/suitcss/base
+[tabindex='-1']:focus {
+  outline: 0 !important;
+}
+
+input,
+button,
+select,
+optgroup,
+textarea {
+  margin: 0; // Remove the margin in Firefox and Safari
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+table {
+  th,
+  td {
+    color: $sbbColorBlack;
+    font-size: pxToRem($sizeFontDefault);
+    line-height: 1.5;
+    margin: 0.75em 0 0; // paragraph as default
+  }
+  th {
+    font-family: $fontSbbBold;
+    font-weight: 400;
+  }
+}
+
+// ----------------------------------------------------------------------------------------------------
+// Headings
+// ----------------------------------------------------------------------------------------------------
+
+h1,
+.sbb-headline1 {
+  font-family: $fontSbbThin;
+  font-weight: normal;
+  line-height: 1.2;
+  margin: 2em 0 0;
+
+  @include sbbStandard {
+    $fontSizes: (
+      base: pxToRem(28),
+      tablet: pxToRem(30),
+      desktop: pxToRem(40),
+      desktop4k: pxToRem(60),
+      desktop5k: pxToRem(80),
+    );
+    @include mqSequence($fontSizes) using ($value) {
+      font-size: $value;
+    }
+  }
+  @include sbbLean {
+    font-family: $fontSbbLight;
+    font-weight: normal;
+    margin: 1em 0 0;
+
+    $sizes: (
+      base: (
+        pxToRem(21),
+        1.19,
+      ),
+      desktop: (
+        pxToRem(28),
+        1.214,
+      ),
+      desktop4k: (
+        pxToRem(42),
+        1.19,
+      ),
+      desktop5k: (
+        pxToRem(56),
+        1.196,
+      ),
+    );
+    @include mqSequence($fontSizes) using ($fontSize, $lineHeight) {
+      font-size: $fontSize;
+      line-height: $lineHeight;
+    }
+  }
+}
+
+h2,
+.sbb-headline2 {
+  font-family: $fontSbbLight;
+  font-weight: normal;
+  line-height: 1.2;
+  margin: 1em 0 0;
+
+  @include sbbStandard {
+    $fontSizes: (
+      base: pxToRem(24),
+      desktop: pxToRem(32),
+      desktop4k: pxToRem(48),
+      desktop5k: pxToRem(64),
+    );
+    @include mqSequence($fontSizes) using ($value) {
+      font-size: $value;
+    }
+  }
+  @include sbbLean {
+    font-size: pxToRem(18);
+    line-height: 1.056;
+
+    $sizes: (
+      desktop: (
+        pxToRem(21),
+        1.19,
+      ),
+      desktop4k: (
+        pxToRem(32),
+        1.188,
+      ),
+      desktop5k: (
+        pxToRem(42),
+        1.19,
+      ),
+    );
+    @include mqSequence($fontSizes) using ($fontSize, $lineHeight) {
+      font-size: $fontSize;
+      line-height: $lineHeight;
+    }
+  }
+}
+
+h3,
+.sbb-headline3 {
+  font-family: $fontSbbLight;
+  font-weight: normal;
+  line-height: 1.2;
+  margin: 2em 0 0;
+
+  @include sbbStandard {
+    $fontSizes: (
+      base: pxToRem(20),
+      tablet: pxToRem(21),
+      desktop4k: pxToRem(32),
+      desktop5k: pxToRem(42),
+    );
+    @include mqSequence($fontSizes) using ($value) {
+      font-size: $value;
+    }
+  }
+  @include sbbLean {
+    $sizes: (
+      base: (
+        pxToRem(16),
+        1.063,
+      ),
+      desktop: (
+        pxToRem(18),
+        1.222,
+      ),
+      desktop4k: (
+        pxToRem(27),
+        1.185,
+      ),
+      desktop5k: (
+        pxToRem(36),
+        1.194,
+      ),
+    );
+    @include mqSequence($fontSizes) using ($fontSize, $lineHeight) {
+      font-size: $fontSize;
+      line-height: $lineHeight;
+    }
+  }
+}
+
+h4,
+.sbb-headline4 {
+  font-family: $fontSbbBold;
+  font-weight: normal;
+  line-height: 1.5;
+  margin: 2em 0 0;
+
+  @include sbbStandard {
+    $fontSizes: (
+      base: pxToRem(15) desktop4k: pxToRem(23),
+      desktop5k: pxToRem(30),
+    );
+    @include mqSequence($fontSizes) using ($value) {
+      font-size: $value;
+    }
+  }
+  @include sbbLean {
+    $sizes: (
+      base: (
+        pxToRem(15),
+        0.933,
+      ),
+      desktop: (
+        pxToRem(16),
+        1.188,
+      ),
+      desktop4k: (
+        pxToRem(24),
+        1.208,
+      ),
+      desktop5k: (
+        pxToRem(32),
+        1.188,
+      ),
+    );
+    @include mqSequence($sizes) using ($fontSize, $lineHeight) {
+      font-size: $fontSize;
+      line-height: $lineHeight;
+    }
+  }
+}
+
+// ----------------------------------------------------------------------------------------------------
+// Text
+// ----------------------------------------------------------------------------------------------------
+
+.sbb-text-lead {
+  font-family: $fontSbbLight;
+  font-weight: normal;
+  color: $sbbColorText;
+  line-height: 1.3;
+  margin: 2em 0 0;
+
+  $fontSizes: (
+    base: pxToRem(20),
+    tablet: pxToRem(21),
+    desktop4k: pxToRem(32),
+    desktop5k: pxToRem(40),
+  );
+  @include mqSequence($fontSizes) using ($value) {
+    font-size: $value;
+  }
+  @include mq($from: desktop, $to: desktop) {
+    line-height: 1.524;
+  }
+}
+
+p,
+.sbb-copy {
+  font-size: pxToRem(15);
+  margin: 1em 0 0; // paragraph as default
+  @include sbbStandard {
+    line-height: 1.733;
+  }
+  @include sbbLean {
+    line-height: 1.533;
+  }
+
+  $fontSizes: (
+    desktop4k: pxToRem(23),
+    desktop5k: pxToRem(30),
+  );
+  @include mqSequence($fontSizes) using ($value) {
+    font-size: $value;
+  }
+}
+
+// ----------------------------------------------------------------------------------------------------
+// Link
+// ----------------------------------------------------------------------------------------------------
+
+a,
+.sbb-link {
+  color: $sbbColorText;
+  text-decoration: underline;
+  text-decoration-skip-ink: auto; // -> read more about here https://medium.com/@iamhiwelo/improving-text-readability-for-dyslexic-users-with-skip-ink-underlines-bf52a2f3426b
+  @include sbbStandard {
+    line-height: 1.733;
+  }
+  @include sbbLean {
+    line-height: 1.533;
+  }
+
+  &:hover,
+  &:focus {
+    color: $sbbColorRed125;
+
+    @media screen and (-ms-high-contrast: active) {
+      color: windowText;
+
+      &:before,
+      &:after {
+        border-color: windowText;
+      }
+    }
+  }
+
+  // TODO: 4k, 5k
+}
+
+// ----------------------------------------------------------------------------------------------------
+// Lists
+// ----------------------------------------------------------------------------------------------------
+
+ul,
+.sbb-unordered-list,
+ol,
+.sbb-ordered-list {
+  font-size: pxToRem($sizeFontDefault);
+  margin-left: pxToRem(8);
+  margin-top: pxToRem(17);
+  margin-bottom: pxToRem(30);
+
+  @include mq($from: desktop) {
+    margin-top: pxToRem(25);
+  }
+
+  li {
+    margin-top: pxToRem(8);
+  }
+}
+
+ul,
+.sbb-unordered-list {
+  list-style-type: disc;
+  padding-left: pxToRem(16);
+}
+
+ul li,
+.sbb-unordered-list li {
+  padding-left: pxToRem(16 - 6);
+}
+
+ol,
+.sbb-ordered-list {
+  list-style-type: none;
+  counter-reset: item;
+  padding-left: 0;
+
+  > li {
+    display: table;
+    padding-left: 0;
+  }
+
+  > li:before {
+    content: counters(item, '.') '.';
+    counter-increment: item;
+
+    display: table-cell;
+    padding-right: pxToRem(13, $sizeFontDefault);
+  }
+}
+
+ol ol,
+.sbb-ordered-list ol,
+ol ul,
+.sbb-ordered-list ul,
+ul ul,
+.sbb-unordered-list ul,
+ul ol,
+.sbb-unordered-list ol {
+  margin: pxToRem(6) 0 0 pxToRem(8);
+}
+
+// if ol is nested inside ul, we need just 1 hierarchy level for the counter
+ul li ol > li:before,
+.sbb-unordered-list li ol > li:before {
+  content: counter(item) '.';
+}
+
+// ----------------------------------------------------------------------------------------------------
+// Form Elements
+// ----------------------------------------------------------------------------------------------------
+
+input[type='email'],
+input[type='password'],
+input[type='search'],
+input[type='text'],
+input[type='number'],
+input[type='tel'],
+input[type='time'],
+input[type='datetime'],
+input[type='datetime-local'],
+input[type='url'],
+input:not([type]),
+select,
+textarea,
+.sbb-form-element {
+  @include inputfields;
+}
+
+input[placeholder],
+.sbb-form-element[placeholder] {
+  text-overflow: ellipsis;
+}
+
+input[type='number'],
+input[type='time'],
+input[type='datetime'],
+input[type='datetime-local'] {
+  -moz-appearance: textfield;
+
+  &::-webkit-inner-spin-button,
+  &::-webkit-outer-spin-button,
+  &::-webkit-clear-button {
+    appearance: none;
+    margin: 0;
+    width: 0;
+    padding: 0;
+    background: transparent;
+  }
+}
+
+select {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  position: relative;
+  background-color: transparent;
+  display: inline-flex;
+  box-sizing: border-box;
+
+  &::-ms-expand {
+    display: none;
+  }
+
+  // The `outline: none` from `.sbb-input-element` works on all browsers, however Firefox also
+  // adds a special `focus-inner` which we have to disable explicitly. See:
+  // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/button#Firefox
+  &::-moz-focus-inner {
+    border: 0;
+  }
+
+  &:not(:disabled) {
+    cursor: pointer;
+  }
+
+  // Custom select expand icon
+  $sbbSelectExpandIconSize: 24;
+  $sbbSelectExpandIconRight: 12;
+  align-items: center;
+  background: url('data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJfeDMwX18xXyIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiIHZpZXdCb3g9IjAgMCAyNCAyNCIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgMjQgMjQ7ZmlsbDogJTIzNjY2OyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+PHBhdGggZD0iTTcuNywxMC43TDguNCwxMGwzLjYsMy42bDMuNi0zLjZsMC43LDAuN0wxMiwxNUw3LjcsMTAuN3oiLz48L3N2Zz4=')
+    no-repeat;
+  padding-right: pxToRem(44);
+  background-position: center right pxToRem($sbbSelectExpandIconRight);
+  background-size: toPx($sbbSelectExpandIconSize) toPx($sbbSelectExpandIconSize);
+
+  @include sbbStandard {
+    @include mq($from: desktop4k) {
+      background-position: center right pxToRem($sbbSelectExpandIconRight * $scalingFactor4k);
+      background-size: toPx($sbbSelectExpandIconSize * $scalingFactor4k);
+    }
+    @include mq($from: desktop5k) {
+      background-position: center right pxToRem($sbbSelectExpandIconRight * $scalingFactor5k);
+      background-size: toPx($sbbSelectExpandIconSize * $scalingFactor5k);
+    }
+  }
+  @include sbbLean {
+    padding-right: pxToRem(38);
+    background-position: center right pxToRem(6);
+    background-size: toPx($sbbSelectExpandIconSize) toPx($sbbSelectExpandIconSize);
+  }
+}
+
+textarea {
+  white-space: pre-wrap;
+  overflow: auto;
+
+  &:disabled {
+    opacity: 1;
+  }
+}
+
+// ----------------------------------------------------------------------------------------------------
+// Fieldset
+// ----------------------------------------------------------------------------------------------------
+
+fieldset,
+.sbb-fieldset {
+  margin: 0;
+  min-width: 0;
+  border: 1px solid $sbbColorSilver;
+  padding: pxToRem(36) pxToRem(24);
+
+  > legend {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    padding: 0;
+    font-family: $fontSbbLight;
+    font-weight: 400;
+    line-height: 1.2;
+    font-size: 24px;
+    margin: 0 0 24px;
+    float: left;
+  }
+
+  fieldset {
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    padding-left: 0;
+    padding-right: 0;
+
+    &:last-of-type {
+      border-bottom: none;
+    }
+
+    > legend {
+      font-size: 20px;
+    }
+  }
+
+  @include sbbStandard {
+    > legend {
+      @include mq($from: desktop) {
+        font-size: 32px;
+      }
+      @include mq($from: desktop4k) {
+        font-size: 48px;
+        margin: 0 0 36px;
+      }
+      @include mq($from: desktop5k) {
+        font-size: 64px;
+        margin: 0 0 48px;
+      }
+    }
+
+    fieldset {
+      > legend {
+        $fontSizes: (
+          desktop: pxToRem(22),
+          desktop4k: pxToRem(32),
+          desktop5k: pxToRem(42),
+        );
+        @include mqSequence($fontSizes) using ($value) {
+          font-size: $value;
+        }
+      }
+    }
+
+    @include mq($from: tabletPortrait) {
+      padding: pxToRem(48) pxToRem(24);
+    }
+    @include mq($from: desktop4k) {
+      font-size: pxToRem($sizeFontBase * $scalingFactor4k);
+    }
+    @include mq($from: desktop5k) {
+      font-size: pxToRem($sizeFontBase * $scalingFactor5k);
+    }
+  }
+  @include sbbLean {
+    border: 1px solid $sbbColorGraphite;
+    padding: pxToRem(16);
+
+    > legend {
+      font-size: pxToRem(21);
+      margin: 0 0 pxToRem(8);
+    }
+
+    fieldset {
+      border-color: $sbbColorCloud;
+
+      > legend {
+        font-size: pxToRem(16);
+      }
+    }
+  }
+}
+
+// ----------------------------------------------------------------------------------------------------
+// Table
+// ----------------------------------------------------------------------------------------------------
+
+$tableBg: $sbbColorWhite;
+$tableTheadBgColor: $sbbColorCloud;
+$tableTbodyStripesBgColor: $sbbColorMilk;
+$tableTheadPadding: pxToEm(16);
+$tableTbodyPadding: pxToEm(16);
+$tableTheadCellPaddingMobile: pxToEm(29) pxToEm(12) pxToEm(30) pxToEm(12);
+$tableTheadCellPadding: pxToEm(29) pxToEm(16) pxToEm(30) pxToEm(16);
+$tableTbodyCellPaddingMobile: pxToEm(18) pxToEm(12) pxToEm(19) pxToEm(12);
+$tableTbodyCellPadding: pxToEm(18) pxToEm(16) pxToEm(19) pxToEm(16);
+$tableTrowHeightBusiness: pxToEm(36);
+$tableCaptionColor: $sbbColorGrey;
+
+.sbb-table {
+  border-spacing: 0;
+  background-color: $tableBg;
+  width: 100%;
+
+  @include sbbStandard {
+    padding-bottom: $tableTbodyPadding;
+
+    @include mq($from: desktop4k) {
+      font-size: toRem(1 * $scalingFactor4k);
+    }
+    @include mq($from: desktop5k) {
+      font-size: toRem(1 * $scalingFactor5k);
+    }
+  }
+  @include sbbLean {
+    border-collapse: collapse;
+
+    thead {
+      text-align: left;
+      background-color: $sbbColorMilk;
+      border-bottom: 1px solid $sbbColorAluminum;
+
+      [dir='rtl'] & {
+        text-align: right;
+      }
+    }
+
+    thead,
+    tbody,
+    tfoot {
+      > tr {
+        th,
+        td {
+          height: $tableTrowHeightBusiness;
+          padding: 0 $tableTbodyPadding;
+          border-right: 1px solid $sbbColorAluminum;
+          overflow: hidden;
+          text-overflow: ellipsis;
+
+          &:first-child {
+            padding-left: $tableTbodyPadding;
+            border-left: none;
+
+            [dir='rtl'] & {
+              padding-left: 0;
+              padding-right: $tableTbodyPadding;
+            }
+          }
+
+          &:last-child {
+            padding-right: $tableTbodyPadding;
+            border-right: none;
+
+            [dir='rtl'] & {
+              padding-right: 0;
+              padding-left: $tableTbodyPadding;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  caption {
+    font-size: pxToRem(13);
+    color: $tableCaptionColor;
+  }
+
+  // TODO
+  thead {
+    @if $sbbBusiness {
+    } @else {
+      background-color: $tableTheadBgColor;
+
+      > tr {
+        th,
+        td {
+          padding: $tableTheadCellPaddingMobile;
+
+          @include mq($from: tabletPortrait) {
+            padding: $tableTheadCellPadding;
+
+            &:first-child {
+              border-left: $tableTheadPadding solid $tableTheadBgColor;
+            }
+
+            &:last-child {
+              border-right: $tableTheadPadding solid $tableTheadBgColor;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  tbody {
+    > tr {
+      @if $sbbBusiness {
+        background-color: $sbbColorWhite;
+        border-bottom: 1px solid $sbbColorAluminum;
+
+        &:hover {
+          background-color: $sbbColorCloud;
+        }
+      } @else {
+        &:nth-child(even) {
+          background-color: $tableTbodyStripesBgColor;
+        }
+
+        th,
+        td {
+          padding: $tableTbodyCellPaddingMobile;
+
+          @include mq($from: tabletPortrait) {
+            padding: $tableTbodyCellPadding;
+
+            &:first-child {
+              border-left: $tableTheadPadding solid $tableBg;
+            }
+
+            &:last-child {
+              border-right: $tableTheadPadding solid $tableBg;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.sbb-table-align-center {
+  text-align: center;
+}
+
+.sbb-table-align-left {
+  text-align: left;
+
+  /* th in IE11 won't inherit text-align: we apply it through selector */
+  thead,
+  tbody {
+    > tr {
+      th {
+        text-align: left;
+      }
+    }
+  }
+}
+
+.sbb-table-align-right {
+  text-align: right;
+
+  /* th in IE11 won't inherit text-align: we apply it through selector */
+  thead,
+  tbody {
+    > tr {
+      th {
+        text-align: right;
+      }
+    }
+  }
+}
+
+// ----------------------------------------------------------------------------------------------------
+// SBB CDK Overlay Patch
+// ----------------------------------------------------------------------------------------------------
+
+.cdk-overlay-pane.sbb-overlay-panel {
+  max-height: none;
+}
+
+// ----------------------------------------------------------------------------------------------------
+// SBB time-input
+// ----------------------------------------------------------------------------------------------------
+
+input.sbb-time-input {
+  $timeInputWidth: 84;
+  $timeInputHeight: 48;
+
+  width: pxToRem($timeInputWidth);
+  height: pxToRem($timeInputHeight);
+  text-align: center;
+
+  @include sbbStandard {
+    @include mq($from: desktop4k) {
+      width: pxToRem($timeInputWidth * $scalingFactor4k);
+      height: pxToRem($timeInputHeight * $scalingFactor4k);
+    }
+    @include mq($from: desktop5k) {
+      width: pxToRem($timeInputWidth * $scalingFactor5k);
+      height: pxToRem($timeInputHeight * $scalingFactor5k);
+    }
+  }
+
+  @include sbbLean {
+    width: 70px;
+    height: 36px;
+  }
+}
+
+// ----------------------------------------------------------------------------------------------------
+// SBB scrollbar
+// ----------------------------------------------------------------------------------------------------
+
+$thumbColor: $sbbColorPlatinum;
+$trackColor: $sbbColorMilk;
+
+@mixin scrollbarColor($thumbColor, $trackColor) {
+  scrollbar-color: $thumbColor $trackColor;
+  &::-webkit-scrollbar-thumb {
+    background-color: $thumbColor;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: $trackColor;
+  }
+}
+
+.sbb-scrollbar {
+  @include scrollbarColor(transparent, transparent);
+
+  &:hover,
+  &.sbb-scrollbar-opaque {
+    @include scrollbarColor($thumbColor, $trackColor);
+  }
+
+  scrollbar-width: thin;
+  &::-webkit-scrollbar {
+    width: 0.5rem;
+    height: 0.5rem;
+  }
+
+  &:hover::-webkit-scrollbar-thumb:hover {
+    background-color: $sbbColorStorm;
+  }
+}
+
+// ----------------------------------------------------------------------------------------------------
+// Utility
+// ----------------------------------------------------------------------------------------------------
+
+.clearfix {
+  @include clearfix;
+}

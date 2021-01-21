@@ -30,7 +30,7 @@ ng_module(
 sass_binary(
     name = "typography",
     src = "typography.scss",
-    deps = ["//src/angular/styles:core_scss_lib"],
+    deps = ["//src/angular/styles:typography_lib"],
 )
 
 scss_bundle(
