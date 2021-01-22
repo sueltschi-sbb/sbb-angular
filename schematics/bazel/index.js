@@ -524,8 +524,9 @@ function bazel(options) {
                     ? new RelativeModuleTypeScriptDependencyResolver(tsConfig)
                     : new StrictModuleTypeScriptDependencyResolver(tsConfig);
                 const sassDependencyResolver = new FlexibleSassDependencyResolver(moduleDetector, npmDependencyResolver, context.logger, new Map()
+                    .set('/angular/styles/common', '//src/angular/styles:common_scss_lib')
                     .set('/angular-core/styles/common', '//src/angular-core/styles:common_scss_lib')
-                    .set('external/npm/node_modules/@angular/cdk/a11y', '//src/angular-core/styles:common_scss_lib'));
+                    .set('external/npm/node_modules/@angular/cdk/a11y', '//src/angular/styles:common_scss_lib'));
                 const bazelGenruleResolver = new BazelGenruleResolver();
                 if (isMergeShowcase) {
                     return new ShowcaseMergePackage(packageDir, tree, {
@@ -556,9 +557,7 @@ function bazel(options) {
                         srcRoot,
                         moduleDetector,
                         typeScriptDependencyResolver,
-                        sassDependencyResolver: new FlexibleSassDependencyResolver(moduleDetector, npmDependencyResolver, context.logger, new Map()
-                            .set('/angular/styles/common', '//src/angular/styles:common_scss_lib')
-                            .set('external/npm/node_modules/@angular/cdk/a11y', '//src/angular/styles:common_scss_lib')),
+                        sassDependencyResolver,
                         bazelGenruleResolver,
                     });
                 }
@@ -569,9 +568,7 @@ function bazel(options) {
                         srcRoot,
                         moduleDetector,
                         typeScriptDependencyResolver,
-                        sassDependencyResolver: new FlexibleSassDependencyResolver(moduleDetector, npmDependencyResolver, context.logger, new Map()
-                            .set('/angular/styles/common', '//src/angular/styles:common_scss_lib')
-                            .set('external/npm/node_modules/@angular/cdk/a11y', '//src/angular/styles:common_scss_lib')),
+                        sassDependencyResolver,
                         bazelGenruleResolver,
                     });
                 }

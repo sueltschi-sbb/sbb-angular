@@ -1,5 +1,4 @@
 @import './common';
-@import './typography-utils';
 
 // ----------------------------------------------------------------------------------------------------
 // Custom Webfonts
@@ -445,7 +444,7 @@ ol,
     counter-increment: item;
 
     display: table-cell;
-    padding-right: pxToRem(13, $sizeFontDefault);
+    padding-right: pxToRem(13);
   }
 }
 

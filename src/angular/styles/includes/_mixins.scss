@@ -299,3 +299,39 @@
   -webkit-appearance: none;
   -moz-appearance: none;
 }
+
+// TODO: create classes
+@mixin buttonReset() {
+  background: none;
+  max-width: none;
+  min-width: 0;
+  padding: 0;
+  margin: 0;
+}
+
+@mixin buttonResetFrameless() {
+  @include buttonReset();
+  border: none;
+}
+
+/**
+ * Applies standard selectors to parent
+ */
+@mixin sbbStandard {
+  &,
+  .sbb-lean .sbb-standard &:not(.sbb-lean),
+  .sbb-lean &.sbb-standard {
+    @content;
+  }
+}
+
+/**
+ * Applies lean selectors to parent
+ */
+@mixin sbbLean {
+  .sbb-lean &,
+  .sbb-standard .sbb-lean &:not(.sbb-standard),
+  .sbb-standard &.sbb-lean {
+    @content;
+  }
+}
