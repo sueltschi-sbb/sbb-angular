@@ -24,20 +24,6 @@ sbb-component-viewer sbb-example-viewer pre {
   white-space: pre-wrap;
 }
 
-sbb-business-component-viewer {
-  pre {
-    background-color: #efefef;
-    padding: 1rem 16px;
-    margin: 1rem -16px;
-    white-space: pre-wrap;
-  }
-
-  sbb-business-example-viewer pre {
-    margin: 1rem -16px;
-    white-space: pre-wrap;
-  }
-}
-
 sbb-api-viewer,
 sbb-markdown-viewer {
   > .docs-markdown > h1:first-child {

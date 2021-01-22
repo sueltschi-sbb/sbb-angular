@@ -21,6 +21,7 @@ ng_module(
         "//src/angular-business/header",
         "//src/angular-business/sidebar",
         "//src/angular-public/checkbox",
+        "//src/angular-public/radio-button",
         "//src/angular/core",
         "//src/angular/icon",
         "//src/showcase-merge/app/angular",

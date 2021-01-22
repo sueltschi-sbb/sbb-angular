@@ -521,7 +521,6 @@ textarea,
   }
 
   &[readonly],
-  &:read-only,
   &.readonly {
     background: $sbbColorMilk;
     border-color: $sbbColorAluminum;

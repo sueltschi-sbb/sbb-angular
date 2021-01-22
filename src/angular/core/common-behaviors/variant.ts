@@ -1,10 +1,14 @@
 import { ElementRef } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 
 import { Constructor } from './constructor';
 
+export const ɵtriggerVariantCheck = new Subject<void>();
+
 /** @docs-private */
 export interface HasVariant {
-  readonly variant: Variants;
+  readonly variant: Observable<SbbVariant>;
 }
 
 /** @docs-private */
@@ -16,31 +20,33 @@ export interface HasElementRef {
 }
 
 /** Possible variant values. */
-export type Variants = 'website' | 'webapp' | undefined;
+export type SbbVariant = 'standard' | 'lean' | undefined;
 
-function detectVariant(element: Element): Variants {
-  if (element.classList.contains('sbb-webapp')) {
-    return 'webapp';
+function detectVariant(element: Element): SbbVariant {
+  if (element.classList.contains('sbb-lean')) {
+    return 'lean';
   }
 
   if (typeof getComputedStyle !== 'function') {
-    return 'website';
+    return 'standard';
   }
 
   const styles = getComputedStyle(element);
   const variant =
     styles.getPropertyValue('--sbbMode') || ((styles as any)['-ie-sbbMode'] as string);
-  return variant === 'webapp' ? 'webapp' : 'website';
+  return variant === 'lean' ? 'lean' : 'standard';
 }
 
 /** Mixin to augment a directive with a variant property. */
 export function mixinVariant<T extends Constructor<HasElementRef>>(base: T): HasVariantCtor & T {
   return class extends base {
-    readonly variant: Variants;
+    readonly variant: Observable<SbbVariant> = ɵtriggerVariantCheck.pipe(
+      startWith(null),
+      map(() => detectVariant(this._elementRef.nativeElement))
+    );
 
     constructor(...args: any[]) {
       super(...args);
-      this.variant = detectVariant(this._elementRef.nativeElement);
     }
   };
 }
