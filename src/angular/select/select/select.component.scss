@@ -1,0 +1,126 @@
+@import '../../../angular/styles/common';
+
+$selectArrowWidthHeight: 24;
+$selectArrowRight: 12;
+$selectTriggerPaddingRight: 44;
+
+/**
+@if $sbbBusiness {
+  $selectTriggerPaddingRight: 38;
+  $selectArrowRight: 6;
+}
+
+
+.sbb-select-panel {
+  @include autocompleteBase();
+  @include autocompleteDirectionalRules();
+
+  &.sbb-select-panel-above {
+    @include autocompleteDirectionalRules($mode: reverse);
+  }
+}
+**/
+
+.sbb-select {
+  outline: 0;
+  display: block;
+  cursor: pointer;
+  /**
+  // overwrite input padding because it's applied in .sbb-select-trigger
+  padding: 0;
+  @include sbbStandard {
+    $fontSizes: (
+      desktop4k: 0,
+      desktop5k: 0,
+    );
+    @include mqSequence($fontSizes) using ($value) {
+      padding: $value;
+    }
+  }*/
+  &.ng-touched.ng-invalid:not([aria-expanded='true']) {
+    .sbb-select-trigger {
+      color: $sbbColorError;
+      border-color: $sbbColorError;
+    }
+  }
+}
+
+.sbb-select-trigger {
+  //@include inputFieldPadding();
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding-right: toPx($selectTriggerPaddingRight);
+
+  @include sbbStandard() {
+    @include mq($from: desktop4k) {
+      padding-right: toPx($selectTriggerPaddingRight * $scalingFactor4k);
+    }
+
+    @include mq($from: desktop5k) {
+      padding-right: toPx($selectTriggerPaddingRight * $scalingFactor5k);
+    }
+  }
+}
+
+.sbb-select-value {
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sbb-select-arrow-wrapper {
+  @include absoluteCenterY();
+  color: $sbbColorGrey;
+  right: toPx($selectArrowRight);
+  width: toPx($selectArrowWidthHeight);
+  height: toPx($selectArrowWidthHeight);
+
+  @include sbbLean() {
+    color: $sbbColorGranite;
+  }
+
+  @include sbbStandard() {
+    @include mq($from: desktop4k) {
+      right: toPx($selectArrowRight * $scalingFactor4k);
+      width: toPx($selectArrowWidthHeight * $scalingFactor4k);
+      height: toPx($selectArrowWidthHeight * $scalingFactor4k);
+    }
+
+    @include mq($from: desktop5k) {
+      right: toPx($selectArrowRight * $scalingFactor5k);
+      width: toPx($selectArrowWidthHeight * $scalingFactor5k);
+      height: toPx($selectArrowWidthHeight * $scalingFactor5k);
+    }
+  }
+
+  .sbb-icon {
+    transition: transform 120ms cubic-bezier(0, 0, 0.2, 1);
+    &.sbb-select-arrow-icon-lean {
+      transform: rotate(90deg);
+    }
+  }
+
+  &.sbb-select-arrow-wrapper-rotate {
+    .sbb-icon {
+      &.sbb-select-arrow-icon-lean {
+        transform: rotate(-90deg);
+      }
+
+      &:not(.sbb-select-arrow-icon-lean) {
+        transform: rotate(180deg);
+      }
+    }
+  }
+}
+
+.sbb-select-focused {
+  border-color: $sbbColorGrey;
+}
+
+.sbb-select-disabled {
+  cursor: default;
+  background-color: $sbbColorMilk;
+  border-color: $sbbColorAluminum;
+}

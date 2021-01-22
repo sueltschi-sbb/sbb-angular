@@ -6,6 +6,7 @@ entryPoints = [
     "icon/testing",
     "loading",
     "oauth",
+    "select",
 ]
 
 # List of all non-testing entry-points of the Angular package.
@@ -33,4 +34,5 @@ ANGULAR_MARKDOWN_TARGETS = [
     "icon",
     "loading",
     "oauth",
+    "select",
 ]
